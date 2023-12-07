@@ -1,0 +1,155 @@
+:root {
+  --primary-rose: #f72585;
+  --primary-grape: #7209b7;
+  --primary-zaffre: #3a0ca3;
+  --primary-neon-blue: #4361ee;
+  --primary-vivid-blue: #4cc9f0;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Nova Square', 'Quicksand', 'Rubik Bubbles';
+}
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid:
+    'logo fc search details' 1fr
+    'today today today details' 4fr
+    'today today today forecast' 2fr
+    / 1fr 1fr 3fr 5fr;
+}
+
+.logo-container {
+  grid-area: logo;
+}
+
+.temp-toggle-container {
+  grid-area: fc;
+}
+
+.search-container {
+  grid-area: search;
+}
+
+.today-container {
+  grid-area: today;
+  display: grid;
+  grid-template-rows: 1fr 1fr 4fr 3fr;
+  padding: 1rem;
+}
+
+.today-container__flex-container-1 {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.today-container__title {
+  place-self: start;
+  margin: 0;
+  font-size: 2rem;
+}
+
+.today-container__local-time {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.today-container__flex-container-2 {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}
+
+.today-container__location-name {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.today-container__last-updated {
+  display: grid;
+  grid-template-rows: 1fr 2fr;
+}
+
+.today-container__last-updated-title {
+  margin: 0;
+  font-size: 0.7rem;
+  place-self: center start;
+}
+
+.today-container__last-updated-value {
+  margin: 0;
+  font-size: 1rem;
+  place-self: center;
+}
+
+.today-container__flex-container-3 {
+  display: grid;
+  grid:
+    'icon temp feel' 2fr
+    'icon text text' 1fr
+    / 1fr 1fr 1fr;
+}
+
+.today-container__icon {
+  grid-area: icon;
+}
+
+.today-container__temp {
+  grid-area: temp;
+  display: grid;
+  grid-template-rows: 1fr 3fr;
+}
+
+.today-container__temp-title {
+  margin: 0;
+  font-size: 0.7rem;
+}
+
+.today-container__temp-value {
+  margin: 0;
+  font-size: 3rem;
+}
+
+.today-container__feels-like {
+  grid-area: feel;
+  display: grid;
+  grid-template-rows: 1fr 3fr;
+}
+
+.today-container__feels-like-title {
+  margin: 0;
+  font-size: 0.7rem;
+}
+
+.today-container__feels-like-value {
+  margin: 0;
+  font-size: 3rem;
+}
+
+.today-container__desc {
+  grid-area: text;
+  place-self: center;
+  margin: 0;
+  font-size: 0.7rem;
+}
+
+.today-container__flex-container-4 {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min-content;
+}
+
+.details-container {
+  grid-area: details;
+}
+
+.forecast-container {
+  grid-area: forecast;
+}
