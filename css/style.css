@@ -52,12 +52,13 @@ body {
 }
 
 .today-container__title {
-  place-self: start;
+  place-self: center start;
   margin: 0;
   font-size: 2rem;
 }
 
 .today-container__local-time {
+  place-self: center end;
   margin: 0;
   font-size: 1.5rem;
 }

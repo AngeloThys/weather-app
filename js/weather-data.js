@@ -4,7 +4,7 @@ import { getWeatherForecast } from './weather-forecast.js';
 
 // Returns true if weather element exist in localStorage.
 function WeatherItemExists() {
-  if (localStorage.getItem('forecastData')) {
+  if (localStorage.getItem('forecast')) {
     return true;
   } else {
     return false;
@@ -13,7 +13,7 @@ function WeatherItemExists() {
 
 // Returns weather element.
 function getWeatherItem() {
-  const weatherDataString = localStorage.getItem('forecastData');
+  const weatherDataString = localStorage.getItem('forecast');
 
   const weatherDataObject = JSON.parse(weatherDataString);
 
@@ -29,12 +29,13 @@ async function createWeatherItem() {
 }
 
 // Returns weather data from localStorage
-export async function getWeatherData() {
+export function getWeatherData() {
   if (WeatherItemExists()) {
     return getWeatherItem();
   } else {
-    await createWeatherItem();
-    return getWeatherItem();
+    createWeatherItem().then(() => {
+      return getWeatherItem();
+    });
   }
 }
 
@@ -44,4 +45,25 @@ export async function setWeatherData(searchTerm) {
   const forecastData = await getWeatherForecast(searchTerm);
 
   localStorage.setItem('forecast', JSON.stringify(forecastData));
+}
+
+function getTimezone() {
+  const data = getWeatherData();
+
+  return data.location.tz_id;
+}
+
+export function createTimezoneTime() {
+  const timezone = getTimezone();
+  const date = new Date();
+  const options = {
+    hour12: false,
+    timezone: timezone,
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  };
+  const timezoneTime = Intl.DateTimeFormat('en-GB', options).format(date);
+
+  return timezoneTime;
 }
