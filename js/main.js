@@ -1,17 +1,23 @@
 'use strict';
 
-import * as weatherData from './weather-data.js';
-import { getWeatherForecast } from './weather-forecast.js';
+import * as weather from './weather.js';
+import weatherConditions from '../weather-conditions.json' assert { type: 'json' };
 
+const weatherData = weather.getWeatherData();
 const localTime = document.querySelector('.today-container__local-time');
-setInterval(() => {
-  localTime.textContent = weatherData.createTimezoneTime();
-}, 1000);
-
 const locationName = document.querySelector('.today-container__location-name');
-locationName.textContent = weatherData.createLocation();
-
 const lastUpdated = document.querySelector(
   '.today-container__last-updated-value'
 );
-lastUpdated.textContent = weatherData.createLastUpdatedTime();
+const icon = document.querySelector('.today-container__icon');
+
+function setTodayValues(weatherData, weatherConditions) {
+  setInterval(() => {
+    localTime.textContent = weather.createTimezoneTime(weatherData);
+  }, 1000);
+  locationName.textContent = weather.createLocation(weatherData);
+  lastUpdated.textContent = weather.createLastUpdatedTime(weatherData);
+  icon.src = weather.createConditionIconUrl(weatherData, weatherConditions);
+}
+
+setTodayValues(weatherData, weatherConditions);

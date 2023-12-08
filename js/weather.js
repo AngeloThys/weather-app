@@ -47,16 +47,9 @@ export async function setWeatherData(searchTerm) {
   localStorage.setItem('forecast', JSON.stringify(forecastData));
 }
 
-// Returns the timezone of the data.
-function getTimezone() {
-  const data = getWeatherData();
-
-  return data.location.tz_id;
-}
-
 // returns the local time of the timezone.
-export function createTimezoneTime() {
-  const timezone = getTimezone();
+export function createTimezoneTime(weatherData) {
+  const timezone = weatherData.location.tz_id;
   const date = new Date();
   const options = {
     hour12: false,
@@ -70,37 +63,17 @@ export function createTimezoneTime() {
   return timezoneTime;
 }
 
-// Returns the location name.
-function getLocationName() {
-  const data = getWeatherData();
-
-  return data.location.name;
-}
-
-// Returns the location country.
-function getLocationCountry() {
-  const data = getWeatherData();
-
-  return data.location.country;
-}
-
 // Return location name + country formatted.
-export function createLocation() {
-  const name = getLocationName();
-  const country = getLocationCountry();
+export function createLocation(weatherData) {
+  const name = weatherData.location.name;
+  const country = weatherData.location.country;
 
   return `${name}, ${country}`;
 }
 
-function getLastUpdatedDate() {
-  const data = getWeatherData();
-  const lastUpdatedDate = new Date(data.current.last_updated);
-
-  return lastUpdatedDate
-}
-
-export function createLastUpdatedTime() {
-  const lastUpdatedDate = getLastUpdatedDate();
+// Return last updated time formatted.
+export function createLastUpdatedTime(weatherData) {
+  const lastUpdatedDate = new Date(weatherData.current.last_updated);
 
   let lastUpdatedHours = lastUpdatedDate.getHours();
   if (lastUpdatedHours < 10) {
@@ -121,4 +94,21 @@ export function createLastUpdatedTime() {
   const lastUpdatedTime = `${lastUpdatedHours}:${lastUpdatedMinutes}`;
 
   return lastUpdatedTime;
+}
+
+// Return condition icon url
+export function createConditionIconUrl(weatherData, weatherConditions) {
+  const conditionCode = weatherData.current.condition.code;
+  const conditionObject =  weatherConditions.find((object) => {
+    return object.code === conditionCode;
+  })
+  const conditionIcon = conditionObject.icon;
+  
+  const isDay = weatherData.current.is_day;
+
+  if (isDay === 1) {
+    return `../images/weatherAPI/weather/64x64/day/${conditionIcon}.png`;
+  } else {
+    return `../images/weatherAPI/weather/64x64/night/${conditionIcon}.png`;
+  }
 }
