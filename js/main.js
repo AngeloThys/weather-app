@@ -2,4 +2,4 @@
 
 import * as weatherData from './weather-data.js';
 
-weatherData.getWeatherData();
+// weatherData.getWeatherData();
