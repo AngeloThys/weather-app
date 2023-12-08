@@ -1,7 +1,7 @@
 'use strict';
 
 import * as weather from './weather.js';
-import weatherConditions from '../weather-conditions.json' assert { type: 'json' };
+import weatherConditions from '../weather-conditions.js';
 
 const weatherData = weather.getWeatherData();
 const localTime = document.querySelector('.today-container__local-time');
@@ -21,3 +21,5 @@ function setTodayValues(weatherData, weatherConditions) {
 }
 
 setTodayValues(weatherData, weatherConditions);
+
+console.log(weatherConditions);
