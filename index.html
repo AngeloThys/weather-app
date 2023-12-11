@@ -37,7 +37,7 @@
     <div class="today-container">
       <div class="today-container__flex-container-1">
         <h1 class="today-container__title">Today</h1>
-        <p class="today-container__local-time"></p>
+        <p class="today-container__local-time">00:00:00</p>
       </div>
       <div class="today-container__flex-container-2">
         <h2 class="today-container__location-name"></h2>
@@ -47,18 +47,20 @@
         </div>
       </div>
       <div class="today-container__flex-container-3">
-        <img src="" alt="" class="today-container__icon">
         <div class="today-container__temp">
           <h4 class="today-container__temp-title">Temperature</h4>
           <h2 class="today-container__temp-value"></h2>
-          <i class="today-container__temp-icon wi wi-fahrenheit"></i>
+          <i class="today-container__temp-icon"></i>
         </div>
         <div class="today-container__feels-like">
           <h4 class="today-container__feels-like-title">Feels Like</h3>
           <h2 class="today-container__feels-like-value"></h2>
-          <i class="today-container__feels-like-icon wi wi-fahrenheit"></i>
+          <i class="today-container__feels-like-icon"></i>
         </div>
-        <h4 class="today-container__desc"></h4>
+        <div class="today-container__inner-flex-container">
+          <img src="" alt="" class="today-container__icon">
+          <h4 class="today-container__desc"></h4>
+        </div>
       </div>
       <div class="today-container__flex-container-4">
         <div class="today-container__wind">
@@ -87,11 +89,8 @@
         </div>
       </div>
     </div>
-    <div class="details-container">
-
-    </div>
     <div class="forecast-container">
-
+    
     </div>
   </body>
 </html>

@@ -4,7 +4,7 @@ import * as weather from './weather.js';
 import weatherConditions from '../weather-conditions.js';
 
 const weatherData = weather.getWeatherData();
-const unitSystemToggle = document.querySelector('.temp-toggle__checkbox')
+const unitSystemToggle = document.querySelector('.temp-toggle__checkbox');
 const localTime = document.querySelector('.today-container__local-time');
 const locationName = document.querySelector('.today-container__location-name');
 const lastUpdated = document.querySelector(
@@ -13,6 +13,10 @@ const lastUpdated = document.querySelector(
 const icon = document.querySelector('.today-container__icon');
 const temp = document.querySelector('.today-container__temp-value');
 const tempFeel = document.querySelector('.today-container__feels-like-value');
+const tempIcon = document.querySelector('.today-container__temp-icon');
+const tempFeelIcon = document.querySelector(
+  '.today-container__feels-like-icon'
+);
 const desc = document.querySelector('.today-container__desc');
 const windIcon = document.querySelector('.today-container__wind-icon');
 const windValue = document.querySelector('.today-container__wind-value');
@@ -60,16 +64,28 @@ function setUnitSystem() {
 
 function setImperial() {
   temp.textContent = weather.getTemperatureFahrenheit(weatherData);
+  temp.className = 'today-container__temp-value fahrenheit';
   tempFeel.textContent = weather.getTemperatureFeelingFahrenheit(weatherData);
+  tempFeel.className = 'today-container__feels-like-value fahrenheit';
+  tempIcon.className = 'today-container__temp-icon wi wi-fahrenheit';
+  tempFeelIcon.className = 'today-container__feels-like-icon wi wi-fahrenheit';
   windValue.textContent = weather.getWindMph(weatherData);
+  windValue.className = 'today-container__wind-value imperial';
   precipValue.textContent = weather.getPrecipIn(weatherData);
+  precipValue.className = 'today-container__precip-value imperial';
 }
 
 function setMetric() {
   temp.textContent = weather.getTemperatureCelsius(weatherData);
+  temp.className = 'today-container__temp-value celsius';
   tempFeel.textContent = weather.getTemperatureFeelingCelsius(weatherData);
+  tempFeel.className = 'today-container__feels-like-value celsius';
+  tempIcon.className = 'today-container__temp-icon wi wi-celsius';
+  tempFeelIcon.className = 'today-container__feels-like-icon wi wi-celsius';
   windValue.textContent = weather.getWindKph(weatherData);
+  windValue.className = 'today-container__wind-value metric';
   precipValue.textContent = weather.getPrecipMm(weatherData);
+  precipValue.className = 'today-container__precip-value metric';
 }
 
 function setBeaufortIcon(beaufort) {
