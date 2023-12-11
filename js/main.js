@@ -1,9 +1,11 @@
 'use strict';
 
-import * as weather from './weather.js';
-import weatherConditions from '../weather-conditions.js';
+import * as weatherStorage from './weather-local-storage.js';
+import * as weatherToday from './weather-today.js';
+import * as weatherForecast from './weather-forecast.js'; //todo: implement forecast logic
+import weatherConditions from './weather-conditions.js';
 
-const weatherData = weather.getWeatherData();
+const weatherData = weatherStorage.getWeatherData();
 const unitSystemToggle = document.querySelector('.temp-toggle__checkbox');
 const localTime = document.querySelector('.today-container__local-time');
 const locationName = document.querySelector('.today-container__location-name');
@@ -37,54 +39,54 @@ const uvValue = document.querySelector('.today-container__uv-value');
 
 function setTodayValues(weatherData, weatherConditions) {
   setInterval(() => {
-    localTime.textContent = weather.createTimezoneTime(weatherData);
+    localTime.textContent = weatherToday.createTimezoneTime(weatherData);
   }, 1000);
-  locationName.textContent = weather.createLocation(weatherData);
-  lastUpdated.textContent = weather.createLastUpdatedTime(weatherData);
-  icon.src = weather.createConditionIconUrl(weatherData, weatherConditions);
-  setUnitSystem();
-  desc.textContent = weather.getDescription(weatherData, weatherConditions);
-  setBeaufortIcon(weather.getBeaufortValue(weatherData));
-  setWindDirectionIcon(weather.getWindDirection(weatherData));
-  windDirectionValue.textContent = weather.getWindDirection(weatherData);
-  humidityValue.textContent = weather.getHumidity(weatherData);
-  cloudCoverageValue.textContent = weather.getCloudCoverage(weatherData);
-  uvValue.textContent = weather.getUv(weatherData);
+  locationName.textContent = weatherToday.createLocation(weatherData);
+  lastUpdated.textContent = weatherToday.createLastUpdatedTime(weatherData);
+  icon.src = weatherToday.createConditionIconUrl(weatherData, weatherConditions);
+  setTodayUnitSystem();
+  desc.textContent = weatherToday.getDescription(weatherData, weatherConditions);
+  setBeaufortIcon(weatherToday.getBeaufortValue(weatherData));
+  setWindDirectionIcon(weatherToday.getWindDirection(weatherData));
+  windDirectionValue.textContent = weatherToday.getWindDirection(weatherData);
+  humidityValue.textContent = weatherToday.getHumidity(weatherData);
+  cloudCoverageValue.textContent = weatherToday.getCloudCoverage(weatherData);
+  uvValue.textContent = weatherToday.getUv(weatherData);
 }
 
-function setUnitSystem() {
+function setTodayUnitSystem() {
   const isFahrenheit = document.querySelector('.temp-toggle__checkbox').checked;
 
   if (isFahrenheit) {
-    setImperial();
+    setTodayImperial();
   } else {
-    setMetric();
+    setTodayMetric();
   }
 }
 
-function setImperial() {
-  temp.textContent = weather.getTemperatureFahrenheit(weatherData);
+function setTodayImperial() {
+  temp.textContent = weatherToday.getTemperatureFahrenheit(weatherData);
   temp.className = 'today-container__temp-value fahrenheit';
-  tempFeel.textContent = weather.getTemperatureFeelingFahrenheit(weatherData);
+  tempFeel.textContent = weatherToday.getTemperatureFeelingFahrenheit(weatherData);
   tempFeel.className = 'today-container__feels-like-value fahrenheit';
   tempIcon.className = 'today-container__temp-icon wi wi-fahrenheit';
   tempFeelIcon.className = 'today-container__feels-like-icon wi wi-fahrenheit';
-  windValue.textContent = weather.getWindMph(weatherData);
+  windValue.textContent = weatherToday.getWindMph(weatherData);
   windValue.className = 'today-container__wind-value imperial';
-  precipValue.textContent = weather.getPrecipIn(weatherData);
+  precipValue.textContent = weatherToday.getPrecipIn(weatherData);
   precipValue.className = 'today-container__precip-value imperial';
 }
 
-function setMetric() {
-  temp.textContent = weather.getTemperatureCelsius(weatherData);
+function setTodayMetric() {
+  temp.textContent = weatherToday.getTemperatureCelsius(weatherData);
   temp.className = 'today-container__temp-value celsius';
-  tempFeel.textContent = weather.getTemperatureFeelingCelsius(weatherData);
+  tempFeel.textContent = weatherToday.getTemperatureFeelingCelsius(weatherData);
   tempFeel.className = 'today-container__feels-like-value celsius';
   tempIcon.className = 'today-container__temp-icon wi wi-celsius';
   tempFeelIcon.className = 'today-container__feels-like-icon wi wi-celsius';
-  windValue.textContent = weather.getWindKph(weatherData);
+  windValue.textContent = weatherToday.getWindKph(weatherData);
   windValue.className = 'today-container__wind-value metric';
-  precipValue.textContent = weather.getPrecipMm(weatherData);
+  precipValue.textContent = weatherToday.getPrecipMm(weatherData);
   precipValue.className = 'today-container__precip-value metric';
 }
 
@@ -99,4 +101,4 @@ function setWindDirectionIcon(windDirection) {
 }
 
 setTodayValues(weatherData, weatherConditions);
-unitSystemToggle.addEventListener('click', setUnitSystem);
+unitSystemToggle.addEventListener('click', setTodayUnitSystem);

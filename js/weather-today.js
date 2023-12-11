@@ -1,52 +1,6 @@
 'use strict';
 
-import { getWeatherForecast } from './weather-forecast.js';
-import beaufortScale from '../beaufort-scale.js';
-
-// Returns true if weather element exist in localStorage.
-function WeatherItemExists() {
-  if (localStorage.getItem('forecast')) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-// Returns weather element.
-function getWeatherItem() {
-  const weatherDataString = localStorage.getItem('forecast');
-
-  const weatherDataObject = JSON.parse(weatherDataString);
-
-  return weatherDataObject;
-}
-
-// Creates the weather element in localStorage.
-async function createWeatherItem() {
-  // fetch data for default searchTerm
-  const forecastData = await getWeatherForecast();
-
-  localStorage.setItem('forecast', JSON.stringify(forecastData));
-}
-
-// Returns weather data from localStorage
-export function getWeatherData() {
-  if (WeatherItemExists()) {
-    return getWeatherItem();
-  } else {
-    createWeatherItem().then(() => {
-      return getWeatherItem();
-    });
-  }
-}
-
-// Saves weather data fetched with searchTerm in localStorage.
-export async function setWeatherData(searchTerm) {
-  // fetch data with searchTerm
-  const forecastData = await getWeatherForecast(searchTerm);
-
-  localStorage.setItem('forecast', JSON.stringify(forecastData));
-}
+import beaufortScale from './beaufort-scale.js';
 
 // returns the local time of the timezone.
 export function createTimezoneTime(weatherData) {
