@@ -17,18 +17,23 @@
     <script src="./js/main.js" type="module"></script>
   </head>
   <body>
-    <div class="logo-container">
-      <img src="" alt="" class="logo">
-    </div>
-    <div class="temp-toggle-container">
-      <label for="" class="temp-toggle">
-        <input type="checkbox" name="" id="" class="temp-toggle__checkbox">
-        <span class="temp-toggle__slider"></span>
-      </label>
-    </div>
-    <div class="search-container">
-      <input type="search" name="" id="" class="search">
-    </div>
+    <header class="header">
+      <div class="logo-container">
+        <img src="./images/bolt-logo.svg" alt="logo" class="logo">
+      </div>
+      <div class="temp-toggle-container">
+        <label class="temp-toggle">
+          <input type="checkbox" class="temp-toggle__checkbox">
+          <span class="temp-toggle__slider"></span>
+          <i class="temp-toggle__celsius wi wi-celsius"></i>
+          <i class="temp-toggle__fahrenheit wi wi-fahrenheit"></i>
+        </label>
+      </div>
+      <div class="search-container">
+        <input type="search" class="search">
+        <i class="search__icon wi wi-strong-wind"></i>
+      </div>
+    </header>
     <div class="today-container">
       <div class="today-container__flex-container-1">
         <h1 class="today-container__title">Today</h1>
@@ -46,10 +51,12 @@
         <div class="today-container__temp">
           <h4 class="today-container__temp-title">Temperature</h4>
           <h2 class="today-container__temp-value"></h2>
+          <i class="today-container__temp-icon wi wi-fahrenheit"></i>
         </div>
         <div class="today-container__feels-like">
           <h4 class="today-container__feels-like-title">Feels Like</h3>
           <h2 class="today-container__feels-like-value"></h2>
+          <i class="today-container__feels-like-icon wi wi-fahrenheit"></i>
         </div>
         <h4 class="today-container__desc"></h4>
       </div>

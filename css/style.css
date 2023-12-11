@@ -1,8 +1,16 @@
 :root {
   --primary-rose: #f72585;
+  --secondary-rose: #fb92c2;
+  --tertiary-rose: #7c1343;
   --primary-grape: #7209b7;
+  --secondary-grape: #b984db;
+  --tertiary-grape: #39055c;
   --primary-zaffre: #3a0ca3;
+  --secondary-zaffre: #9d86d1;
+  --tertiary-zaffre: #1d0652;
   --primary-neon-blue: #4361ee;
+  --secondary-neon-blue: #a1b0f7;
+  --tertiary-neon-blue: #223177;
   --primary-vivid-blue: #4cc9f0;
 }
 
@@ -21,29 +29,174 @@ body {
   width: 100vw;
   display: grid;
   grid:
-    'logo fc search details' 1fr
+    'header header header details' 1fr
     'today today today details' 4fr
     'today today today forecast' 2fr
     / 1fr 1fr 3fr 5fr;
+    background: url('../images/topography.svg');
+    background-color: #9d86d1;
+}
+
+.header {
+  grid-area: header;
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  background-color: var(--primary-zaffre);
+  border-bottom: 4px solid var(--tertiary-zaffre);
+  border-right: 4px solid var(--tertiary-zaffre);
+  border-radius: 0px 0px 4px 0px;
+  box-shadow: 0px 0px 4px var(--tertiary-zaffre);
 }
 
 .logo-container {
-  grid-area: logo;
+  place-self: center;
+  display: grid;
+  padding: 0 1rem;
+}
+
+.logo {
+  box-sizing: content-box;
+  place-self: center;
+  height: 64px;
+  width: auto;
 }
 
 .temp-toggle-container {
-  grid-area: fc;
+  place-self: center start;
+  display: grid;
+}
+
+.temp-toggle {
+  place-self: center;
+  position: relative;
+  display: inline-block;
+  width: 90px;
+  height: 40px;
+}
+
+.temp-toggle__checkbox {
+  display: none;
+}
+
+.temp-toggle__slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: var(--secondary-neon-blue);
+  transition: all 0.4s ease-in-out;
+  border-radius: 4px;
+  border: 4px solid var(--tertiary-neon-blue);
+  box-shadow: 0px 0px 2px var(--tertiary-neon-blue);
+}
+
+.temp-toggle__slider::before {
+  position: absolute;
+  content: '';
+  height: 18px;
+  width: 18px;
+  left: 5px;
+  bottom: 5px;
+  background-color: var(--primary-neon-blue);
+  border: 2px solid var(--tertiary-neon-blue);
+  border-radius: 20%;
+  transition: all 0.4s ease-in-out;
+  transform: rotate(45deg);
+  box-shadow: 0px 0px 2px var(--tertiary-neon-blue);
+}
+
+.temp-toggle__checkbox:checked + .temp-toggle__slider {
+  background-color: var(--secondary-grape);
+  border: 4px solid var(--tertiary-grape);
+  box-shadow: 0px 0px 2px var(--tertiary-grape);
+}
+
+.temp-toggle__checkbox:checked + .temp-toggle__slider::before {
+  transform: translateX(50px) rotate(45deg);
+  background-color: var(--primary-grape);
+  border: 2px solid var(--tertiary-grape);
+  box-shadow: 0px 0px 2px var(--tertiary-grape);
+}
+
+.temp-toggle__celsius {
+  position: absolute;
+  z-index: 1;
+  left: 14px;
+  top: 12px;
+  color: var(--secondary-neon-blue);
+  transition-delay: 0.3s;
+  cursor: pointer;
+}
+
+.temp-toggle__checkbox:checked ~ .temp-toggle__celsius {
+  opacity: 0;
+  transition-delay: 0s;
+}
+
+.temp-toggle__fahrenheit {
+  position: absolute;
+  z-index: 1;
+  right: 15px;
+  top: 12px;
+  color: var(--secondary-grape);
+  opacity: 0;
+  transition-delay: 0s;
+  cursor: pointer;
+}
+
+.temp-toggle__checkbox:checked ~ .temp-toggle__fahrenheit {
+  opacity: 1;
+  transition-delay: 0.3s;
 }
 
 .search-container {
-  grid-area: search;
+  place-self: center;
+}
+
+.search {
+  border: 4px solid var(--tertiary-neon-blue);
+  border-radius: 4px;
+  height: 40px;
+  width: 300px;
+}
+
+.search:focus {
+  outline: 0;
+  box-shadow: 0px 0px 4px 2px var(--primary-rose);
+  border-radius: 4px;
+}
+
+.search__icon {
+  color: var(--primary-rose);
+  cursor: pointer;
+  border: 4px solid var(--primary-neon-blue);
+  border-radius: 4px;
+  background-color: var(--secondary-neon-blue);
+  padding: 0.25rem;
+  transition: all 0.1s ease-in-out;
+}
+
+.search__icon:hover {
+  transform: scale(0.9);
+}
+
+.search__icon:active {
+  transform: scale(1.2);
+  background-color: var(--secondary-rose);
+  border: 4px solid var(--tertiary-rose);
 }
 
 .today-container {
   grid-area: today;
   display: grid;
   grid-template-rows: 1fr 1fr 4fr 3fr;
-  padding: 1rem;
+  margin: 1rem;
+  padding: 0.5rem;
+  background-color: var(--secondary-zaffre);
+  border: 4px solid var(--tertiary-zaffre);
+  border-radius: 8px;
 }
 
 .today-container__flex-container-1 {
@@ -55,22 +208,33 @@ body {
   place-self: center start;
   margin: 0;
   font-size: 2rem;
+  color: var(--primary-rose);
+  text-shadow: 1px 1px 2px var(--tertiary-neon-blue);
 }
 
 .today-container__local-time {
   place-self: center end;
   margin: 0;
   font-size: 1.5rem;
+  height: 60px;
+  width: 150px;
+  border: 4px solid var(--tertiary-neon-blue);
+  background-color: var(--secondary-grape);
+  padding: 0.5rem;
+  border-radius: 4px;
 }
 
 .today-container__flex-container-2 {
   display: grid;
   grid-template-columns: 3fr 1fr;
+  min-height: 100px;
 }
 
 .today-container__location-name {
   margin: 0;
   font-size: 2rem;
+  text-underline-offset: 9px;
+  text-shadow: 1px 1px 2px var(--primary-rose);
 }
 
 .today-container__last-updated {
@@ -82,12 +246,13 @@ body {
   margin: 0;
   font-size: 0.7rem;
   place-self: center start;
+  text-decoration: 2px black underline;
 }
 
 .today-container__last-updated-value {
   margin: 0;
   font-size: 1rem;
-  place-self: center;
+  place-self: start center;
 }
 
 .today-container__flex-container-3 {
@@ -100,38 +265,63 @@ body {
 
 .today-container__icon {
   grid-area: icon;
+  place-self: center;
+  height: 96px;
+  width: auto;
 }
 
 .today-container__temp {
   grid-area: temp;
   display: grid;
-  grid-template-rows: 1fr 3fr;
+  grid:
+    "title title"
+    "value icon";
 }
 
 .today-container__temp-title {
+  grid-area: title;
   margin: 0;
   font-size: 0.7rem;
+  place-self: center start;
 }
 
 .today-container__temp-value {
+  grid-area: value;
   margin: 0;
   font-size: 3rem;
+  place-self: center;
+}
+
+.today-container__temp-icon {
+  grid-area: icon;
+  place-self: center start;
 }
 
 .today-container__feels-like {
   grid-area: feel;
   display: grid;
-  grid-template-rows: 1fr 3fr;
+  grid:
+    "title title"
+    "value icon";
 }
 
 .today-container__feels-like-title {
+  grid-area: title;
   margin: 0;
   font-size: 0.7rem;
+  place-self: center start;
 }
 
 .today-container__feels-like-value {
+  grid-area: value;
   margin: 0;
   font-size: 3rem;
+  place-self: center;
+}
+
+.today-container__feels-like-icon {
+  grid-area: icon;
+  place-self: center start;
 }
 
 .today-container__desc {
