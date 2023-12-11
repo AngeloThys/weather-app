@@ -166,7 +166,7 @@ export function getBeaufortValue(weatherData) {
 
   const beaufortObject = beaufortScale.find((beaufortObject) => {
     return (
-      windSpeedKph >= beaufortObject.windSpeedMin &&
+      windSpeedKph > beaufortObject.windSpeedMin &&
       windSpeedKph <= beaufortObject.windSpeedMax
     );
   });
