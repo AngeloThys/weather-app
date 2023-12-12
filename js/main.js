@@ -5,8 +5,10 @@ import * as weatherToday from './weather-today.js';
 import * as weatherForecast from './weather-forecast.js'; //todo: implement forecast logic
 import weatherConditions from './weather-conditions.js';
 
-const weatherData = weatherStorage.getWeatherData();
+let weatherData = weatherStorage.getWeatherData();
 
+const searchIcon = document.querySelector('.search__icon');
+const search = document.querySelector('.search');
 const unitSystemToggle = document.querySelector('.temp-toggle__checkbox');
 const localTime = document.querySelector('.today-container__local-time');
 const locationName = document.querySelector('.today-container__location-name');
@@ -350,4 +352,12 @@ setForecastValues(weatherData, weatherConditions);
 unitSystemToggle.addEventListener('click', () => {
   setTodayUnitSystem(weatherData);
   setForecastUnitSystem(weatherData);
+});
+searchIcon.addEventListener('click', () => {
+  const searchTerm = search.value;
+  weatherStorage.setWeatherData(searchTerm).then(() => {
+    weatherData = weatherStorage.getWeatherData();
+    setTodayValues(weatherData, weatherConditions);
+    setForecastValues(weatherData, weatherConditions);
+  });
 });
