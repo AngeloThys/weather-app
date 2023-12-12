@@ -6,6 +6,7 @@ import * as weatherForecast from './weather-forecast.js'; //todo: implement fore
 import weatherConditions from './weather-conditions.js';
 
 const weatherData = weatherStorage.getWeatherData();
+
 const unitSystemToggle = document.querySelector('.temp-toggle__checkbox');
 const localTime = document.querySelector('.today-container__local-time');
 const locationName = document.querySelector('.today-container__location-name');
@@ -37,15 +38,141 @@ const cloudCoverageValue = document.querySelector(
 );
 const uvValue = document.querySelector('.today-container__uv-value');
 
+function setForecastDates(weatherData) {
+  const forecastDates = weatherForecast.getDates(weatherData);
+
+  for (let i = 0; i < 3; i++) {
+    document.querySelector(`.forecast-day-${i + 1}__date`).textContent =
+      forecastDates[i];
+  }
+}
+
+function setForecastIcons(weatherData, weatherConditions) {
+  const forecastIconCodes = weatherForecast.getIconCodes(
+    weatherData,
+    weatherConditions
+  );
+
+  for (let i = 0; i < 3; i++) {
+    document.querySelector(
+      `.forecast-day-${i + 1}__image`
+    ).src = `./images/weatherAPI/weather/64x64/day/${forecastIconCodes[i]}.png`;
+  }
+}
+
+function setForecastAvgTempsCelsius(weatherData) {
+  const forecastAvgTempsCelsius =
+    weatherForecast.getAvgTempsCelsius(weatherData);
+
+  for (let i = 0; i < 3; i++) {
+    document.querySelector(`.forecast-day-${i + 1}__avg-temp`).textContent =
+      forecastAvgTempsCelsius[i];
+  }
+}
+
+function setForecastAvgTempsFahrenheit(weatherData) {
+  const forecastAvgTempsFahrenheit =
+    weatherForecast.getAvgTempsFahrenheit(weatherData);
+
+  for (let i = 0; i < 3; i++) {
+    document.querySelector(`.forecast-day-${i + 1}__avg-temp`).textContent =
+      forecastAvgTempsFahrenheit[i];
+  }
+}
+
+function setForecastMaxTempsCelsius(weatherData) {
+  const forecastMaxTempsCelsius =
+    weatherForecast.getMaxTempsCelsius(weatherData);
+
+  for (let i = 0; i < 3; i++) {
+    document.querySelector(`.forecast-day-${i + 1}__max-temp`).textContent =
+      forecastMaxTempsCelsius[i];
+  }
+}
+
+function setForecastMaxTempsFahrenheit(weatherData) {
+  const forecastMaxTempsFahrenheit =
+    weatherForecast.getMaxTempsFahrenheit(weatherData);
+
+  for (let i = 0; i < 3; i++) {
+    document.querySelector(`.forecast-day-${i + 1}__max-temp`).textContent =
+      forecastMaxTempsFahrenheit[i];
+  }
+}
+
+function setForecastMinTempsCelsius(weatherData) {
+  const forecastMinTempsCelsius =
+    weatherForecast.getMinTempsCelsius(weatherData);
+
+  for (let i = 0; i < 3; i++) {
+    document.querySelector(`.forecast-day-${i + 1}__min-temp`).textContent =
+      forecastMinTempsCelsius[i];
+  }
+}
+
+function setForecastMinTempsFahrenheit(weatherData) {
+  const forecastMinTempsFahrenheit =
+    weatherForecast.getMinTempsFahrenheit(weatherData);
+
+  for (let i = 0; i < 3; i++) {
+    document.querySelector(`.forecast-day-${i + 1}__min-temp`).textContent =
+      forecastMinTempsFahrenheit[i];
+  }
+}
+
+function setForecastAvgHumidities(weatherData) {
+  const forecastAvgHumidities = weatherForecast.getAvgHumidities(weatherData);
+
+  for (let i = 0; i < 3; i++) {
+    document.querySelector(`.forecast-day-${i + 1}__avg-humidity`).textContent =
+      forecastAvgHumidities[i];
+  }
+}
+
+function setForecastDailyChanceRain(weatherData) {
+  const forecastDailyChanceRain =
+    weatherForecast.getDailyChancesRain(weatherData);
+
+  for (let i = 0; i < 3; i++) {
+    document.querySelector(
+      `.forecast-day-${i + 1}__daily-chance-rain`
+    ).textContent = forecastDailyChanceRain[i];
+  }
+}
+
+function setForecastMaxwindKph(weatherData) {
+  const forecastMaxwindKph = weatherForecast.getMaxwindsKph(weatherData);
+
+  for (let i = 0; i < 3; i++) {
+    document.querySelector(`.forecast-day-${i + 1}__max-wind`).textContent =
+      forecastMaxwindKph[i];
+  }
+}
+
+function setForecastMaxwindMph(weatherData) {
+  const forecastMaxwindMph = weatherForecast.getMaxwindsMph(weatherData);
+
+  for (let i = 0; i < 3; i++) {
+    document.querySelector(`.forecast-day-${i + 1}__max-wind`).textContent =
+      forecastMaxwindMph[i];
+  }
+}
+
 function setTodayValues(weatherData, weatherConditions) {
   setInterval(() => {
     localTime.textContent = weatherToday.createTimezoneTime(weatherData);
   }, 1000);
   locationName.textContent = weatherToday.createLocation(weatherData);
   lastUpdated.textContent = weatherToday.createLastUpdatedTime(weatherData);
-  icon.src = weatherToday.createConditionIconUrl(weatherData, weatherConditions);
-  setTodayUnitSystem();
-  desc.textContent = weatherToday.getDescription(weatherData, weatherConditions);
+  icon.src = weatherToday.createConditionIconUrl(
+    weatherData,
+    weatherConditions
+  );
+  setTodayUnitSystem(weatherData);
+  desc.textContent = weatherToday.getDescription(
+    weatherData,
+    weatherConditions
+  );
   setBeaufortIcon(weatherToday.getBeaufortValue(weatherData));
   setWindDirectionIcon(weatherToday.getWindDirection(weatherData));
   windDirectionValue.textContent = weatherToday.getWindDirection(weatherData);
@@ -54,20 +181,21 @@ function setTodayValues(weatherData, weatherConditions) {
   uvValue.textContent = weatherToday.getUv(weatherData);
 }
 
-function setTodayUnitSystem() {
+function setTodayUnitSystem(weatherData) {
   const isFahrenheit = document.querySelector('.temp-toggle__checkbox').checked;
 
   if (isFahrenheit) {
-    setTodayImperial();
+    setTodayImperial(weatherData);
   } else {
-    setTodayMetric();
+    setTodayMetric(weatherData);
   }
 }
 
-function setTodayImperial() {
+function setTodayImperial(weatherData) {
   temp.textContent = weatherToday.getTemperatureFahrenheit(weatherData);
   temp.className = 'today-container__temp-value fahrenheit';
-  tempFeel.textContent = weatherToday.getTemperatureFeelingFahrenheit(weatherData);
+  tempFeel.textContent =
+    weatherToday.getTemperatureFeelingFahrenheit(weatherData);
   tempFeel.className = 'today-container__feels-like-value fahrenheit';
   tempIcon.className = 'today-container__temp-icon wi wi-fahrenheit';
   tempFeelIcon.className = 'today-container__feels-like-icon wi wi-fahrenheit';
@@ -77,7 +205,7 @@ function setTodayImperial() {
   precipValue.className = 'today-container__precip-value imperial';
 }
 
-function setTodayMetric() {
+function setTodayMetric(weatherData) {
   temp.textContent = weatherToday.getTemperatureCelsius(weatherData);
   temp.className = 'today-container__temp-value celsius';
   tempFeel.textContent = weatherToday.getTemperatureFeelingCelsius(weatherData);
@@ -100,5 +228,41 @@ function setWindDirectionIcon(windDirection) {
   windDirectionIcon.className = windDirectionClass;
 }
 
+function setForecastValues(weatherData, weatherConditions) {
+  setForecastDates(weatherData);
+  setForecastIcons(weatherData, weatherConditions);
+  setForecastAvgHumidities(weatherData);
+  setForecastDailyChanceRain(weatherData);
+  setForecastUnitSystem(weatherData);
+}
+
+function setForecastUnitSystem(weatherData) {
+  const isFahrenheit = document.querySelector('.temp-toggle__checkbox').checked;
+
+  if (isFahrenheit) {
+    setForecastImperial(weatherData);
+  } else {
+    setForecastMetric(weatherData);
+  }
+}
+
+function setForecastImperial(weatherData) {
+  setForecastAvgTempsFahrenheit(weatherData);
+  setForecastMaxTempsFahrenheit(weatherData);
+  setForecastMinTempsFahrenheit(weatherData);
+  setForecastMaxwindMph(weatherData);
+}
+
+function setForecastMetric(weatherData) {
+  setForecastAvgTempsCelsius(weatherData);
+  setForecastMaxTempsCelsius(weatherData);
+  setForecastMinTempsCelsius(weatherData);
+  setForecastMaxwindKph(weatherData);
+}
+
 setTodayValues(weatherData, weatherConditions);
-unitSystemToggle.addEventListener('click', setTodayUnitSystem);
+setForecastValues(weatherData, weatherConditions);
+unitSystemToggle.addEventListener('click', () => {
+  setTodayUnitSystem(weatherData);
+  setForecastUnitSystem(weatherData);
+});
