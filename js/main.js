@@ -38,6 +38,19 @@ const cloudCoverageValue = document.querySelector(
 );
 const uvValue = document.querySelector('.today-container__uv-value');
 
+const forecastAvgTempIcons = document.querySelectorAll(
+  '.forecast-day__avg-temp-icon'
+);
+const forecastMaxTempIcons = document.querySelectorAll(
+  '.forecast-day__max-temp-icon'
+);
+const forecastMinTempIcons = document.querySelectorAll(
+  '.forecast-day__min-temp-icon'
+);
+const forecastMaxWindIcons = document.querySelectorAll(
+  '.forecast-day__max-wind-icon'
+);
+
 function setForecastDates(weatherData) {
   const forecastDates = weatherForecast.getDates(weatherData);
 
@@ -67,6 +80,12 @@ function setForecastAvgTempsCelsius(weatherData) {
   for (let i = 0; i < 3; i++) {
     document.querySelector(`.forecast-day-${i + 1}__avg-temp`).textContent =
       forecastAvgTempsCelsius[i];
+    document
+      .querySelector(`.forecast-day-${i + 1}__avg-temp`)
+      .classList.remove('fahrenheit');
+    document
+      .querySelector(`.forecast-day-${i + 1}__avg-temp`)
+      .classList.add('celsius');
   }
 }
 
@@ -77,6 +96,12 @@ function setForecastAvgTempsFahrenheit(weatherData) {
   for (let i = 0; i < 3; i++) {
     document.querySelector(`.forecast-day-${i + 1}__avg-temp`).textContent =
       forecastAvgTempsFahrenheit[i];
+    document
+      .querySelector(`.forecast-day-${i + 1}__avg-temp`)
+      .classList.remove('celsius');
+    document
+      .querySelector(`.forecast-day-${i + 1}__avg-temp`)
+      .classList.add('fahrenheit');
   }
 }
 
@@ -87,6 +112,12 @@ function setForecastMaxTempsCelsius(weatherData) {
   for (let i = 0; i < 3; i++) {
     document.querySelector(`.forecast-day-${i + 1}__max-temp`).textContent =
       forecastMaxTempsCelsius[i];
+    document
+      .querySelector(`.forecast-day-${i + 1}__max-temp`)
+      .classList.remove('fahrenheit');
+    document
+      .querySelector(`.forecast-day-${i + 1}__max-temp`)
+      .classList.add('celsius');
   }
 }
 
@@ -97,6 +128,12 @@ function setForecastMaxTempsFahrenheit(weatherData) {
   for (let i = 0; i < 3; i++) {
     document.querySelector(`.forecast-day-${i + 1}__max-temp`).textContent =
       forecastMaxTempsFahrenheit[i];
+    document
+      .querySelector(`.forecast-day-${i + 1}__max-temp`)
+      .classList.remove('celsius');
+    document
+      .querySelector(`.forecast-day-${i + 1}__max-temp`)
+      .classList.add('fahrenheit');
   }
 }
 
@@ -107,6 +144,12 @@ function setForecastMinTempsCelsius(weatherData) {
   for (let i = 0; i < 3; i++) {
     document.querySelector(`.forecast-day-${i + 1}__min-temp`).textContent =
       forecastMinTempsCelsius[i];
+    document
+      .querySelector(`.forecast-day-${i + 1}__min-temp`)
+      .classList.remove('fahrenheit');
+    document
+      .querySelector(`.forecast-day-${i + 1}__min-temp`)
+      .classList.add('celsius');
   }
 }
 
@@ -117,6 +160,12 @@ function setForecastMinTempsFahrenheit(weatherData) {
   for (let i = 0; i < 3; i++) {
     document.querySelector(`.forecast-day-${i + 1}__min-temp`).textContent =
       forecastMinTempsFahrenheit[i];
+    document
+      .querySelector(`.forecast-day-${i + 1}__min-temp`)
+      .classList.remove('celsius');
+    document
+      .querySelector(`.forecast-day-${i + 1}__min-temp`)
+      .classList.add('fahrenheit');
   }
 }
 
@@ -146,6 +195,12 @@ function setForecastMaxwindKph(weatherData) {
   for (let i = 0; i < 3; i++) {
     document.querySelector(`.forecast-day-${i + 1}__max-wind`).textContent =
       forecastMaxwindKph[i];
+    document
+      .querySelector(`.forecast-day-${i + 1}__max-wind`)
+      .classList.remove('imperial');
+    document
+      .querySelector(`.forecast-day-${i + 1}__max-wind`)
+      .classList.add('metric');
   }
 }
 
@@ -155,6 +210,12 @@ function setForecastMaxwindMph(weatherData) {
   for (let i = 0; i < 3; i++) {
     document.querySelector(`.forecast-day-${i + 1}__max-wind`).textContent =
       forecastMaxwindMph[i];
+    document
+      .querySelector(`.forecast-day-${i + 1}__max-wind`)
+      .classList.remove('metric');
+    document
+      .querySelector(`.forecast-day-${i + 1}__max-wind`)
+      .classList.add('imperial');
   }
 }
 
@@ -251,6 +312,18 @@ function setForecastImperial(weatherData) {
   setForecastMaxTempsFahrenheit(weatherData);
   setForecastMinTempsFahrenheit(weatherData);
   setForecastMaxwindMph(weatherData);
+  for (let icon of forecastAvgTempIcons) {
+    icon.className = 'forecast-day__avg-temp-icon wi wi-fahrenheit';
+  }
+  for (let icon of forecastMaxTempIcons) {
+    icon.className = 'forecast-day__max-temp-icon wi wi-fahrenheit';
+  }
+  for (let icon of forecastMinTempIcons) {
+    icon.className = 'forecast-day__min-temp-icon wi wi-fahrenheit';
+  }
+  for (let icon of forecastMaxWindIcons) {
+    icon.textContent = 'Mph';
+  }
 }
 
 function setForecastMetric(weatherData) {
@@ -258,6 +331,18 @@ function setForecastMetric(weatherData) {
   setForecastMaxTempsCelsius(weatherData);
   setForecastMinTempsCelsius(weatherData);
   setForecastMaxwindKph(weatherData);
+  for (let icon of forecastAvgTempIcons) {
+    icon.className = 'forecast-day__avg-temp-icon wi wi-celsius';
+  }
+  for (let icon of forecastMaxTempIcons) {
+    icon.className = 'forecast-day__max-temp-icon wi wi-celsius';
+  }
+  for (let icon of forecastMinTempIcons) {
+    icon.className = 'forecast-day__min-temp-icon wi wi-celsius';
+  }
+  for (let icon of forecastMaxWindIcons) {
+    icon.textContent = 'Kph';
+  }
 }
 
 setTodayValues(weatherData, weatherConditions);
