@@ -2,10 +2,8 @@
 
 import * as weatherStorage from './weather-local-storage.js';
 import * as weatherToday from './weather-today.js';
-import * as weatherForecast from './weather-forecast.js'; //todo: implement forecast logic
+import * as weatherForecast from './weather-forecast.js';
 import weatherConditions from './weather-conditions.js';
-
-let weatherData = weatherStorage.getWeatherData();
 
 const searchIcon = document.querySelector('.search__icon');
 const search = document.querySelector('.search');
@@ -347,17 +345,29 @@ function setForecastMetric(weatherData) {
   }
 }
 
-setTodayValues(weatherData, weatherConditions);
-setForecastValues(weatherData, weatherConditions);
+const weatherData = weatherStorage.getWeatherData();
+
+weatherData.then((data) => {
+  setTodayValues(data, weatherConditions);
+  setForecastValues(data, weatherConditions);
+});
+
 unitSystemToggle.addEventListener('click', () => {
   setTodayUnitSystem(weatherData);
   setForecastUnitSystem(weatherData);
 });
+
 searchIcon.addEventListener('click', () => {
   const searchTerm = search.value;
-  weatherStorage.setWeatherData(searchTerm).then(() => {
-    weatherData = weatherStorage.getWeatherData();
-    setTodayValues(weatherData, weatherConditions);
-    setForecastValues(weatherData, weatherConditions);
-  });
+  weatherStorage
+    .setWeatherData(searchTerm)
+    .then(() => {
+      const newWeatherData = weatherStorage.getWeatherData();
+
+      return newWeatherData;
+    })
+    .then((data) => {
+      setTodayValues(data, weatherConditions);
+      setForecastValues(data, weatherConditions);
+    });
 });

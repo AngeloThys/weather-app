@@ -72,13 +72,13 @@ async function createWeatherItem() {
 }
 
 // Returns weather data from localStorage
-export function getWeatherData() {
+export async function getWeatherData() {
   if (weatherItemExists() && !weatherItemOld()) {
     return getWeatherItem();
   } else {
-    createWeatherItem().then(() => {
-      return getWeatherItem();
-    });
+    const weatherItem = await createWeatherItem();
+
+    return getWeatherItem(weatherItem);
   }
 }
 
