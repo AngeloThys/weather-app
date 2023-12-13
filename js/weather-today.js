@@ -62,9 +62,9 @@ export function createConditionIconUrl(weatherData, weatherConditions) {
   const isDay = weatherData.current.is_day;
 
   if (isDay === 1) {
-    return `../images/weatherAPI/weather/64x64/day/${conditionIcon}.png`;
+    return `./images/weatherAPI/weather/64x64/day/${conditionIcon}.png`;
   } else {
-    return `../images/weatherAPI/weather/64x64/night/${conditionIcon}.png`;
+    return `./images/weatherAPI/weather/64x64/night/${conditionIcon}.png`;
   }
 }
 
