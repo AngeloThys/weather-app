@@ -353,8 +353,12 @@ weatherData.then((data) => {
 });
 
 unitSystemToggle.addEventListener('click', () => {
-  setTodayUnitSystem(weatherData);
-  setForecastUnitSystem(weatherData);
+  const newWeatherData = weatherStorage.getWeatherData();
+
+  weatherData.then((data) => {
+    setTodayUnitSystem(data);
+    setForecastUnitSystem(data);
+  });
 });
 
 search.addEventListener('keydown', (event) => {
