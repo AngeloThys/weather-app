@@ -357,6 +357,13 @@ unitSystemToggle.addEventListener('click', () => {
   setForecastUnitSystem(weatherData);
 });
 
+search.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    searchIcon.click();
+  }
+});
+
 searchIcon.addEventListener('click', () => {
   const searchTerm = search.value;
   weatherStorage
